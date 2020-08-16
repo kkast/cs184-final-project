@@ -24,73 +24,25 @@
 <body>
 
 <h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2018</h1>
-<h1 align="middle">Project 1: Rasterizer</h1>
-<h2 align="middle">YOUR NAME, CS184-??</h2>
+<h1 align="middle">Final Project: Font Edit</h1>
+<h2 align="middle">Kanstantsin Kassevich, 25293356</h2>
 
 <br><br>
 
 <div>
 
 <h2 align="middle">Overview</h2>
-<p>Give a high-level overview of what you implemented in this project. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the project.</p>
+<p>In this project i have implemented a way to get the control points of Bezier curves from .ttf files</p>
 
-<h2 align="middle">Section I: Rasterization</h2>
-
-<h3 align="middle">Part 1: Rasterizing single-color triangles</h3>
-
-<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
-
-<div align="middle">
-  <table style="width=100%">
-    <tr>
-      <td>
-        <img src="images/image1.png" align="middle" width="400px"/>
-        <figcaption align="middle">Caption goes here.</figcaption>
-      </td>
-      <td>
-        <img src="images/image2.png" align="middle" width="400px"/>
-        <figcaption align="middle">Caption goes here.</figcaption>
-      </td>
-    </tr>
-    <br>
-    <tr>
-      <td>
-        <img src="images/image3.png" align="middle" width="400px"/>
-        <figcaption align="middle">Caption goes here.</figcaption>
-      </td>
-      <td>
-        <img src="images/image4.png" align="middle" width="400px"/>
-        <figcaption align="middle">Caption goes here.</figcaption>
-      </td>
-    </tr>
-  </table>
-</div>
+<h2 align="middle">TTF parsing</h2>
 
 
-<h3 align="middle">Part 2: Antialiasing triangles</h3>
-
-
-
-<h3 align="middle">Part 3: Transforms</h3>
-
-
-
-<h2 align="middle">Section II: Sampling</h2>
-
-<h3 align="middle">Part 4: Barycentric coordinates</h3>
-
-
-<h3 align="middle">Part 5: "Pixel sampling" for texture mapping</h3>
-
-
-<h3 align="middle">Part 6: "Level sampling" with mipmaps for texture mapping</h3>
-
-
-
-<h2 align="middle">Section III: Art Competition</h2>
-<p>If you are not participating in the optional art competition, don't worry about this section!</p>
-
-<h3 align="middle">Part 7: Draw something interesting!</h3>
-
-</body>
-</html>
+<p>The initial idea was to be able to edit and save .ttf files in the program.
+    for this purpose i looked at multiple libraries in js and puython. in js Opentype is convenient to convert ttf into its own format, but it doesnt represent .ttf</p>
+<p>I have donwloaded file example.ttf as an example. in the main.py file using the python library fonttools i converted ttf file into xml. After that i have read the article how to deal
+with control points described in xml. https://developer.apple.com/fonts/TrueType-Reference-Manual/RM01/Chap1.html#necessary it says that two offline curves one after another mean that
+bezier control point between is in the middle of these 2 points. Using this information i write parseXml.py file that takes the xml file, extracts the counters for requested chracter and parses the coordinates in order to get all the points on the curve.</p>
+<p>If i was able to finish the project i would build the grid and the render each of the lines received from points from the previous step. If we have two on-curve points one after another, that would mean that they form a line, else 3 points, one in the middle is off-curve point, they
+form quadratic Bezier curve. Using the algebraic formula for the quadratic Bezier curve, or formaula for a line, i would step from one point to another on the curve and then check which pixel this sample belongs,
+if it belongs to some pixel we try to render, we color that pixel into black, else we go to the next step. </p>
+<p>This algorithms would give us the way to render the borders of the fonts.</p>
